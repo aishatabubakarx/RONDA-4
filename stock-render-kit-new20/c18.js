@@ -1,0 +1,20 @@
+/* 18 GREEN FINANCE GROWTH CHART WITH RISING BARS AND LINE, business clip
+   Brief: twelve emerald bars rise in sequence while a glowing line traces a smooth upward curve through them to a pulsing target point; a +248% counter ticks up.
+   Palette: navy #050B14, emerald #2DFFA0 / #0A6B45, mint white #D8FFF0, grid #FFFFFF at 6%. Hero: bars + line. Arc: bars 1-4 s, line 2.5-9 s, counter 5-10 s, payoff pulse at 10.5 s, hold, fade.
+   Premium detail: gradient bars with bright cap lights, area fill under the line, travelling glow head, axis ticks in mono type. No currency symbols or brands. */
+C[18]=()=>{newTL();const D=DUR/1000,g={f:0,l:0,n:0,p:0},x0=300,bw=70,gap=46,yb=860,Hh=600,hs=[.12,.2,.17,.3,.28,.42,.4,.55,.6,.72,.82,.95];
+  A(g,{f:0},{f:1},0,.7,'power2.out');A(g,{f:1},{f:0},D-.9,.9,'power1.in');A(g,{l:0},{l:1},2.5,6.5,'power1.inOut');A(g,{n:0},{n:248},5,5,'power2.out');A(g,{p:0},{p:1},10.4,1.4,'power2.out');
+  const bars=hs.map((h,i)=>{const o={h:0};A(o,{h:0},{h:1},1+i*.25,.95,'power3.out');return o});
+  const pts=hs.map((h,i)=>[x0+i*(bw+gap)+bw/2,yb-h*Hh-46-i*6]),spl=[];for(let i=0;i<pts.length-1;i++){const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];for(let k=0;k<24;k++){const t=k/24,t2=t*t,t3=t2*t;spl.push([.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)])}}spl.push(pts[pts.length-1]);
+  draw=()=>{clear();const ms=now(),t=ms/1000;let bg=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,H);bg.addColorStop(0,'#0a1a2c');bg.addColorStop(1,'#050b14');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    ctx.save();const z=1+.03*t/D;ctx.translate(W/2,H/2);ctx.scale(z,z);ctx.translate(-W/2,-H/2);ctx.globalAlpha=g.f;
+    ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=1.5;for(let i=0;i<=6;i++){const y=yb-i*Hh/6;ctx.beginPath();ctx.moveTo(250,y);ctx.lineTo(1680,y);ctx.stroke();txt(String(i*20),205,y,{f:'JetBrains Mono',w:700,size:20,al:'right',fill:'rgba(216,255,240,.45)'})}
+    ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(250,yb);ctx.lineTo(1680,yb);ctx.stroke();
+    bars.forEach((o,i)=>{const h=hs[i]*Hh*o.h,x=x0+i*(bw+gap);if(h<2)return;const gr=ctx.createLinearGradient(0,yb-h,0,yb);gr.addColorStop(0,'rgba(45,255,160,.92)');gr.addColorStop(1,'rgba(10,107,69,.5)');ctx.fillStyle=gr;ctx.fillRect(x,yb-h,bw,h);
+      ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha*=.7;ctx.drawImage(spr([45,255,160],64),x-30,yb-h-30,bw+60,60);ctx.restore();ctx.fillStyle='#d8fff0';ctx.fillRect(x,yb-h,bw,4)});
+    const n=Math.max(2,Math.floor(g.l*spl.length));if(g.l>0){ctx.beginPath();ctx.moveTo(spl[0][0],yb);for(let i=0;i<n;i++)ctx.lineTo(spl[i][0],spl[i][1]);ctx.lineTo(spl[n-1][0],yb);ctx.closePath();const ag=ctx.createLinearGradient(0,300,0,yb);ag.addColorStop(0,'rgba(45,255,160,.2)');ag.addColorStop(1,'rgba(45,255,160,0)');ctx.fillStyle=ag;ctx.fill();
+      for(const[w,a]of[[16,.12],[6,.4],[3.2,1]]){ctx.strokeStyle=w>3?(w>6?'rgba(45,255,160,1)':'rgba(120,255,200,1)'):'#fff';ctx.globalAlpha=g.f*a;ctx.lineWidth=w;ctx.lineJoin='round';ctx.beginPath();for(let i=0;i<n;i++)i?ctx.lineTo(spl[i][0],spl[i][1]):ctx.moveTo(spl[i][0],spl[i][1]);ctx.stroke()}
+      const hd=spl[n-1];ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=g.f;ctx.drawImage(spr([45,255,160],128),hd[0]-60,hd[1]-60,120,120);ctx.restore();ctx.globalAlpha=g.f;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(hd[0],hd[1],8,0,TAU);ctx.fill()}
+    if(g.p>0){const e=spl[spl.length-1];for(let k=0;k<2;k++){const q=fr(g.p*1+k*.5)*g.p;ctx.globalAlpha=g.f*(1-q)*.8;ctx.strokeStyle='#2dffa0';ctx.lineWidth=3;ctx.beginPath();ctx.arc(e[0],e[1],14+q*90,0,TAU);ctx.stroke()}}
+    ctx.globalAlpha=g.f;txt('GROWTH',x0,130,{f:'JetBrains Mono',w:700,size:26,al:'left',ls:10,fill:'rgba(216,255,240,.6)'});txt('+'+Math.round(g.n)+'%',x0-6,205,{f:'Montserrat',w:900,size:130,al:'left',ls:-4,fill:'#2dffa0',glow:[['rgba(45,255,160,.5)',26]]});
+    ctx.restore();ctx.globalAlpha=1;bloom(.35,[2,4]);vignette(.45);grain(.025)}};
